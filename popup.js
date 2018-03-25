@@ -19,8 +19,10 @@ document.addEventListener('DOMContentLoaded', function() {
       greeting: 'hello'
     }, function(response) {
       console.log(response.data);
+      var pageUrl = (tabs[0].url);
       msg.innerText = response.data;
     });
 
   });
+
 });

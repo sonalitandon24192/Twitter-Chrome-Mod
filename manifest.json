@@ -18,6 +18,14 @@
   },
   "permissions": [
     "activeTab",
-    "storage"
-  ]
+    "storage",
+    "tabs"
+  ],
+
+  "background": {
+
+    "page" : "background.html"
+  }
+
+
 }
