@@ -20,7 +20,8 @@
   "permissions": [
     "activeTab",
     "storage",
-    "tabs"
+    "tabs",
+    "https://*.twitter.com/"
   ],
 
   "background": {
