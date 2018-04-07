@@ -21,7 +21,8 @@
     "activeTab",
     "storage",
     "tabs",
-    "https://*.twitter.com/"
+    "https://*.twitter.com/",
+    "https://*.herokuapp.com/"
   ],
 
   "background": {

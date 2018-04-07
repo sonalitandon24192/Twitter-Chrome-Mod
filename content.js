@@ -1,21 +1,48 @@
+
+function get_score(username, callback) {
+    var url = "https://pumpkin-shortcake-65417.herokuapp.com/tpi?user="+username+"&numberTwit=200";
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function()
+    {
+        if (request.readyState == 4 && request.status == 200)
+        {
+            callback(request.responseText); // Another callback here
+        }
+    }; 
+    request.open('GET', url);
+    request.send();
+}
+
+function checkabusive(data) {
+   var item= JSON.parse(data);
+   if (item.abusive_user == false) {
+      changeBio();
+      changeTweet();
+   }
+}
+
+///////////////////////////////////
+
+
 function findUserId(document) {
   var userId = document.querySelector(".ProfileHeaderCard-screennameLink > span > b");
   return userId.innerText;
 }
 
-var jsChecktimer = setInterval(checkForJS_Finish, 500);
+//var jsChecktimer = setInterval(checkForJS_Finish, 500);
 var userID;
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     let userId = findUserId(document);
+    console.log(userId)
     if (userId) {
-      sendResponse({
-        data: userId
-      });
+      //send get request
+      get_score(userId, checkabusive)
     }
     return true;
   });
+
 
 
 function checkForJS_Finish() {
