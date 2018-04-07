@@ -25,6 +25,7 @@ function checkForJS_Finish() {
       changeBio();
       changeTweet();
       changeToReport();
+      changeAvi();
     }
 
   }
@@ -46,6 +47,15 @@ function changeToReport() {
   //unfollowBtn[0].style.display="inline";
   followBtn[0].innerText = "Report";
   followBtn[0].classList.add("report-text");
+}
+//Add image overlay to user profile picture
+function changeAvi() {
+  let container = document.getElementsByClassName("ProfileAvatar-container")[0];      //Get parent of Profile Avatar
+  let avi = document.getElementsByClassName("ProfileAvatar-image");                   //Get current avatar if you want to modify it at all
+  var clone = document.createElement("img");                                          // Create image that will be the overlay
+  clone.classList.add("ProfileAvatar-image");
+  clone.src=`chrome-extension://${chrome.runtime.id}/bad-mouth.png`;                  //If you are using a local image remember to update the permissions in the manifest
+  container.appendChild(clone);
 }
 // Note: Currently, these run everyewhere, in timeline and on profile page
 function changeTweet(){
