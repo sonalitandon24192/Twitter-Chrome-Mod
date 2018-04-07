@@ -1,31 +1,60 @@
-function findUserId(document) {
-  var userId = document.querySelector(".ProfileHeaderCard-screennameLink > span > b");
-  return userId.innerText;
+var jsChecktimer = setInterval(checkForJS_Finish, 500);
+var userID;
+
+function get_score(username, callback) {
+    var url = "https://pumpkin-shortcake-65417.herokuapp.com/tpi?user="+username+"&numberTwit=200";
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function()
+    {
+        if (request.readyState == 4 && request.status == 200)
+        {
+            callback(request.responseText); // Another callback here
+        }
+    };
+    request.open('GET', url);
+    request.send();
 }
 
-var jsChecktimer = setInterval(checkForJS_Finish, 5000);
-var userID;
+function checkabusive(data) {
+   var item= JSON.parse(data);
+   if (item.abusive_user == true) {
+      changeBio();
+      changeTweet();
+   }
+   else {
+     console.log("this is a nice person");
+   }
+}
+
+///////////////////////////////////
+
+
+function findUserId(document) {
+  let userId = document.querySelector(".ProfileHeaderCard-screennameLink > span > b");
+  return userId.innerText;
+}
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     let userId = findUserId(document);
+    console.log(userId)
     if (userId) {
-      sendResponse({
-        data: userId
-      });
     }
     return true;
   });
+
 
 
 function checkForJS_Finish() {
   if (document.querySelector(".ProfileHeaderCard-bio")
   ) {
     if (document.querySelector(".ProfileHeaderCard-screennameLink > span > b").innerText != userID){
-      changeBio();
-      changeTweet();
-      changeToReport();
-      changeAvi();
+      //send get request
+      userID = findUserId(document);
+      get_score(userID, checkabusive);
+      // changeBio();
+      // changeTweet();
+      // changeToReport();
     }
 
   }
@@ -34,7 +63,7 @@ function checkForJS_Finish() {
 function changeBio(){
   let bio = document.getElementsByClassName("ProfileHeaderCard-bio");
   bio[0].innerText = "This is a pretty girl";
-  userID = document.querySelector(".ProfileHeaderCard-screennameLink > span > b").innerText;
+  //userID = document.querySelector(".ProfileHeaderCard-screennameLink > span > b").innerText;
 }
 
 function changeToReport() {
@@ -59,9 +88,18 @@ function changeAvi() {
 }
 // Note: Currently, these run everyewhere, in timeline and on profile page
 function changeTweet(){
-  let tweetBtn = document.getElementById("global-new-tweet-button");
-  tweetBtn.innerHTML = "Moralize this user";
-  tweetBtn.addEventListener('click', moralize);
+  let actionBtns = document.getElementsByClassName("ProfileMessagingActions-buttonWrapper");
+  if(actionBtns.length > 1){
+    for (let btn of actionBtns){
+      btn.classList.add("u-sizeFull");
+    }
+  }
+  let tweetBtn = document.getElementsByClassName("NewTweetButton-text");
+  tweetBtn[0].innerHTML = "Moralize this user";
+  tweetBtn[0].addEventListener('click', moralize);
+  let msgBtn = document.getElementsByClassName("DMButton-text");
+  msgBtn[0].innerHTML = "Whisper to this user";
+
 }
 
 function moralize() {
