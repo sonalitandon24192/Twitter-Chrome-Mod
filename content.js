@@ -1,3 +1,5 @@
+var jsChecktimer = setInterval(checkForJS_Finish, 500);
+var userID;
 
 function get_score(username, callback) {
     var url = "https://pumpkin-shortcake-65417.herokuapp.com/tpi?user="+username+"&numberTwit=200";
@@ -8,16 +10,19 @@ function get_score(username, callback) {
         {
             callback(request.responseText); // Another callback here
         }
-    }; 
+    };
     request.open('GET', url);
     request.send();
 }
 
 function checkabusive(data) {
    var item= JSON.parse(data);
-   if (item.abusive_user == false) {
+   if (item.abusive_user == true) {
       changeBio();
       changeTweet();
+   }
+   else {
+     console.log("this is a nice person");
    }
 }
 
@@ -25,20 +30,15 @@ function checkabusive(data) {
 
 
 function findUserId(document) {
-  var userId = document.querySelector(".ProfileHeaderCard-screennameLink > span > b");
+  let userId = document.querySelector(".ProfileHeaderCard-screennameLink > span > b");
   return userId.innerText;
 }
-
-//var jsChecktimer = setInterval(checkForJS_Finish, 500);
-var userID;
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     let userId = findUserId(document);
     console.log(userId)
     if (userId) {
-      //send get request
-      get_score(userId, checkabusive)
     }
     return true;
   });
@@ -49,9 +49,12 @@ function checkForJS_Finish() {
   if (document.querySelector(".ProfileHeaderCard-bio")
   ) {
     if (document.querySelector(".ProfileHeaderCard-screennameLink > span > b").innerText != userID){
-      changeBio();
-      changeTweet();
-      changeToReport();
+      //send get request
+      userID = findUserId(document);
+      get_score(userID, checkabusive);
+      // changeBio();
+      // changeTweet();
+      // changeToReport();
     }
 
   }
@@ -60,7 +63,7 @@ function checkForJS_Finish() {
 function changeBio(){
   let bio = document.getElementsByClassName("ProfileHeaderCard-bio");
   bio[0].innerText = "This is a pretty girl";
-  userID = document.querySelector(".ProfileHeaderCard-screennameLink > span > b").innerText;
+  //userID = document.querySelector(".ProfileHeaderCard-screennameLink > span > b").innerText;
 }
 
 function changeToReport() {
