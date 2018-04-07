@@ -101,7 +101,9 @@ function changeTweet(){
   tweetBtn[0].innerHTML = "Moralize this user";
   tweetBtn[0].addEventListener('click', moralize);
   let msgBtn = document.getElementsByClassName("DMButton-text");
-  msgBtn[0].innerHTML = "Whisper to this user";
+  if (msgBtn.length){
+    msgBtn[0].innerHTML = "Whisper to this user";
+  };
 
 }
 
