@@ -3,7 +3,7 @@ function findUserId(document) {
   return userId.innerText;
 }
 
-var jsChecktimer = setInterval(checkForJS_Finish, 5000);
+var jsChecktimer = setInterval(checkForJS_Finish, 500);
 var userID;
 
 chrome.runtime.onMessage.addListener(
@@ -47,11 +47,20 @@ function changeToReport() {
   followBtn[0].innerText = "Report";
   followBtn[0].classList.add("report-text");
 }
-// Note: Currently, these run everyewhere, in timeline and on profile page
+
 function changeTweet(){
-  let tweetBtn = document.getElementById("global-new-tweet-button");
-  tweetBtn.innerHTML = "Moralize this user";
-  tweetBtn.addEventListener('click', moralize);
+  let actionBtns = document.getElementsByClassName("ProfileMessagingActions-buttonWrapper");
+  if(actionBtns.length > 1){
+    for (let btn of actionBtns){
+      btn.classList.add("u-sizeFull");
+    }
+  }
+  let tweetBtn = document.getElementsByClassName("NewTweetButton-text");
+  tweetBtn[0].innerHTML = "Moralize this user";
+  tweetBtn[0].addEventListener('click', moralize);
+  let msgBtn = document.getElementsByClassName("DMButton-text");
+  msgBtn[0].innerHTML = "Whisper to this user";
+
 }
 
 function moralize() {
