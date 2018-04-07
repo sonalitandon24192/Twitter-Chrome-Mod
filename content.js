@@ -17,9 +17,12 @@ function get_score(username, callback) {
 
 function checkabusive(data) {
    var item= JSON.parse(data);
+   console.log(item);
    if (item.abusive_user == true) {
       changeBio();
       changeTweet();
+      changeAvi();
+      changeToReport();
    }
    else {
      console.log("this is a nice person");
