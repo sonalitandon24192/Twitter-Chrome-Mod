@@ -64,9 +64,57 @@ function checkForJS_Finish() {
 }
 
 function changeBio(){
-  let bio = document.getElementsByClassName("ProfileHeaderCard-bio");
-  bio[0].innerText = "This is a pretty girl";
-  //userID = document.querySelector(".ProfileHeaderCard-screennameLink > span > b").innerText;
+  userID = document.querySelector(".ProfileHeaderCard-nameLink").innerText;
+
+  var originalDiv = document.getElementsByClassName("ProfileHeaderCard-screenname");
+
+  if (! document.getElementById("bio-box")) {
+    var biobox = document.createElement("DIV");
+    originalDiv[0].appendChild(biobox);
+    biobox.setAttribute("id", "bio-box");
+
+    var biobox_title = document.createElement("DIV");
+    biobox.appendChild(biobox_title);
+    biobox_title.setAttribute("id", "bio-box-title");
+    biobox_title.innerText = "Twitter Profile Identifier";
+
+    var biobox_abusive = document.createElement("DIV");
+    biobox.appendChild(biobox_abusive);
+    biobox_abusive.setAttribute("id", "bio-box-text");
+    biobox_abusive.innerText = "This user is...";
+
+    var biobox_words = document.createElement("DIV");
+    biobox.appendChild(biobox_words);
+    biobox_words.setAttribute("id", "bio-box-text");
+    biobox_words.innerText = "TOP 5 Abusive Words";
+
+    // var OrigBtn = document.getElementsByClassName("NewTweetButton u-sizeFull js-tooltip EdgeButton EdgeButton--primary u-textTruncate");
+    // var button1 = document.createElement("BUTTON");
+    // button1.setAttribute("class", "NewTweetButton u-sizeFull js-tooltip EdgeButton EdgeButton--primary u-textTruncate");
+    // biobox.appendChild(button1);
+    // var button1_text = document.createTextNode("Whisper");
+    // button1.appendChild(button1_text);
+    // button1.addEventListener('click', moralize);
+
+    // var p_prime = OrigBtn.cloneNode(true);
+    // biobox.appendChild(p_prime);
+
+    // var parentDiv = OrigBtn.parentNode;
+    // parentDiv.replaceChild(button1, OrigBtn);
+
+    // if there is other class, remove them
+    let bio1 = document.getElementsByClassName("ProfileHeaderCard-bio");
+    let bio2 = document.getElementsByClassName("ProfileHeaderCard-location");
+    let bio3 = document.getElementsByClassName("ProfileHeaderCard-url");
+    let bio4 = document.getElementsByClassName("ProfileHeaderCard-joinDate");
+    let bio5 = document.getElementsByClassName("ProfileHeaderCard-birthdate");
+
+    bio1[0].setAttribute("class", "u-hidden");
+    bio2[0].setAttribute("class", "u-hidden");
+    bio3[0].setAttribute("class", "u-hidden");
+    bio4[0].setAttribute("class", "u-hidden");
+    bio5[0].setAttribute("class", "u-hidden");
+  }
 }
 
 function changeToReport() {

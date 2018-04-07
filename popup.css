@@ -1,0 +1,25 @@
+/* Title   #eb3b5a */
+/* Body    #fc5c65 */
+
+body {
+  margin: 50px;
+  white-space: nowrap;
+  color: #fc5c65;
+}
+
+h1 {
+  font-size: 15px;
+  color: #eb3b5a;
+}
+
+.btn-get {
+  background-color: #ffffff;
+  padding: 10px;
+  margin: 10px;
+}
+
+#container {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
