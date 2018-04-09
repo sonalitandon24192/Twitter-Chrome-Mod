@@ -1,27 +1,41 @@
 #bio-box {
-  width: 100%;
-  font-family: sans-serif;
-  font-size: 16px;
+  border-radius: 10px;
+  width: 240px;
+  font-weight: 100;
+  font-family: Helvetica, sans-serif;
   background-Color: #eb3b5a;
   color: #ffffff;
   padding: 10px;
   margin-top: 10px;
 }
 
+#char-box {
+}
+
 #bio-box-title {
-  font-family: sans-serif;
-  font-size: 12px;
-  color: #ffffff;
-  padding-bottom: 10px;
+  font-size: 14px;
+  padding-bottom: 20px;
+  display: inline-block;
+  font-style: italic;
+}
+
+#bio-box-img {
+  width: 30px;
+  display: inline;
+  vertical-align: text-top;
+  float: right;
 }
 
 #bio-box-text {
-  font-family: sans-serif;
-  font-size: 16px;
-  color: #ffffff;
-  padding-bottom: 10px;
+  font-family: arial, Helvetica, sans-serif;
+  font-size: 14px;
+  background-Color: #ffffff;
+  color: #eb3b5a;
+  padding: 10px;
 }
 
-#bio-box-words {
-
+#bio-box-highlight {
+  font-family: arial, Helvetica, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
 }

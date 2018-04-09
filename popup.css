@@ -2,7 +2,7 @@
 /* Body    #fc5c65 */
 
 body {
-  margin: 50px;
+  margin: 20px;
   white-space: nowrap;
   color: #fc5c65;
 }
@@ -14,8 +14,7 @@ h1 {
 
 .btn-get {
   background-color: #ffffff;
-  padding: 10px;
-  margin: 10px;
+  padding: 5px;
 }
 
 #container {

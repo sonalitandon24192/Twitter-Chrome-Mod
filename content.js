@@ -69,51 +69,66 @@ function changeBio(){
   var originalDiv = document.getElementsByClassName("ProfileHeaderCard-screenname");
 
   if (! document.getElementById("bio-box")) {
+
+    // Parent Element
     var biobox = document.createElement("DIV");
     originalDiv[0].appendChild(biobox);
-    biobox.setAttribute("id", "bio-box");
+    biobox.id = "bio-box";
 
-    var biobox_title = document.createElement("DIV");
-    biobox.appendChild(biobox_title);
-    biobox_title.setAttribute("id", "bio-box-title");
-    biobox_title.innerText = "Twitter Profile Identifier";
+      // Title
+      var biobox_title = document.createElement("DIV");
+      biobox.appendChild(biobox_title);
+      biobox_title.id = "bio-box-title";
+      biobox_title.innerText = "Twitter Profile Identifier";
 
-    var biobox_abusive = document.createElement("DIV");
-    biobox.appendChild(biobox_abusive);
-    biobox_abusive.setAttribute("id", "bio-box-text");
-    biobox_abusive.innerText = "This user is...";
+      // Title Image
+      var logo = document.createElement("IMG");
+      logo.setAttribute("src", "chrome-extension://pldpfpfcdmnmdellocecpejmgpimfppj/icon.png");
+      logo.setAttribute("id", "bio-box-img");
+      biobox.append(logo);
 
-    var biobox_words = document.createElement("DIV");
-    biobox.appendChild(biobox_words);
-    biobox_words.setAttribute("id", "bio-box-text");
-    biobox_words.innerText = "TOP 5 Abusive Words";
+      // Box
+      var charbox = document.createElement("DIV");
+      biobox.appendChild(charbox);
+      charbox.id = "char-box";
 
-    // var OrigBtn = document.getElementsByClassName("NewTweetButton u-sizeFull js-tooltip EdgeButton EdgeButton--primary u-textTruncate");
-    // var button1 = document.createElement("BUTTON");
-    // button1.setAttribute("class", "NewTweetButton u-sizeFull js-tooltip EdgeButton EdgeButton--primary u-textTruncate");
-    // biobox.appendChild(button1);
-    // var button1_text = document.createTextNode("Whisper");
-    // button1.appendChild(button1_text);
-    // button1.addEventListener('click', moralize);
+        // Prompt Abusive_toggle
+        var biobox_char = document.createElement("P");
+        charbox.appendChild(biobox_char);
+        biobox_char.id = "bio-box-text";
+        biobox_char.innerText = "This user is";
 
-    // var p_prime = OrigBtn.cloneNode(true);
-    // biobox.appendChild(p_prime);
+        // Abusive Toggle
+        var biobox_char_toggle = document.createElement("P");
+        biobox_char.appendChild(biobox_char_toggle);
+        biobox_char_toggle.id = "bio-box-highlight";
+        biobox_char_toggle.innerText = "Abusive";
 
-    // var parentDiv = OrigBtn.parentNode;
-    // parentDiv.replaceChild(button1, OrigBtn);
+        // Prompt Abusive_words
+        var biobox_word = document.createElement("P");
+        charbox.appendChild(biobox_word);
+        biobox_word.id = "bio-box-text";
+        biobox_word.innerText = "Top 5 Abusive Words";
 
-    // if there is other class, remove them
-    let bio1 = document.getElementsByClassName("ProfileHeaderCard-bio");
-    let bio2 = document.getElementsByClassName("ProfileHeaderCard-location");
-    let bio3 = document.getElementsByClassName("ProfileHeaderCard-url");
-    let bio4 = document.getElementsByClassName("ProfileHeaderCard-joinDate");
-    let bio5 = document.getElementsByClassName("ProfileHeaderCard-birthdate");
+        // Abusive_words
+        var biobox_word_items = document.createElement("P");
+        biobox_word.appendChild(biobox_word_items);
+        biobox_word_items.id = "bio-box-highlight";
+        biobox_word_items.innerText = "Something";
+
+    var bio1 = document.getElementsByClassName("ProfileHeaderCard-bio");
+    var bio2 = document.getElementsByClassName("ProfileHeaderCard-location");
+    var bio3 = document.getElementsByClassName("ProfileHeaderCard-url");
+    var bio4 = document.getElementsByClassName("ProfileHeaderCard-joinDate");
+    var bio5 = document.getElementsByClassName("ProfileHeaderCard-birthdate");
+    var bio6 = document.getElementsByClassName("ProfileMessagingActions");
 
     bio1[0].setAttribute("class", "u-hidden");
     bio2[0].setAttribute("class", "u-hidden");
     bio3[0].setAttribute("class", "u-hidden");
     bio4[0].setAttribute("class", "u-hidden");
     bio5[0].setAttribute("class", "u-hidden");
+    bio6[0].setAttribute("style", "margin-top:0px;");
   }
 }
 
@@ -134,11 +149,14 @@ function changeAvi() {
   let avi = document.getElementsByClassName("ProfileAvatar-image");                   //Get current avatar if you want to modify it at all
   var clone = document.createElement("img");                                          // Create image that will be the overlay
   clone.classList.add("ProfileAvatar-image");
-  clone.src=`chrome-extension://${chrome.runtime.id}/bad-mouth.png`;                  //If you are using a local image remember to update the permissions in the manifest
+  clone.src = "chrome-extension://${chrome.runtime.id}/bad-mouth.png";                  //If you are using a local image remember to update the permissions in the manifest
   container.appendChild(clone);
 }
 // Note: Currently, these run everyewhere, in timeline and on profile page
 function changeTweet(){
+  let Btn = document.getElementsByClassName("NewTweetButton");
+  Btn[0].setAttribute("style", "background-color:#eb3b5a;");
+
   let actionBtns = document.getElementsByClassName("ProfileMessagingActions-buttonWrapper");
   if(actionBtns.length > 1){
     for (let btn of actionBtns){
