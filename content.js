@@ -1,5 +1,6 @@
 var jsChecktimer = setInterval(checkForJS_Finish, 500);
 var userID;
+var item,abusive_list; // jSON returned from server. Making it public for highlighting abusive words on lazy loading
 
 function get_score(username, callback) {
     var url = "https://pumpkin-shortcake-65417.herokuapp.com/tpi?user="+username+"&numberTwit=200";
@@ -15,14 +16,24 @@ function get_score(username, callback) {
     request.send();
 }
 
+window.onscroll = function(ev) {
+  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      // you're at the bottom of the page
+      if(item.yes_no)
+        highlightAbusivePosts(abusive_list);
+  }
+};
+
 function checkabusive(data) {
-   var item= JSON.parse(data);
+  item= JSON.parse(data);
    console.log(item);
    if (item.yes_no == true) {
-      changeBio();
+      abusive_list = item.word_list.map(function(d) { return d.word })
+      changeBio(abusive_list);
       changeTweet();
       changeAvi();
       changeToReport();
+      highlightAbusivePosts(abusive_list);
    }
    else {
      console.log("this is a nice person");
@@ -33,9 +44,27 @@ function checkabusive(data) {
 
 
 function findUserId(document) {
-  let userId = document.querySelector(".ProfileHeaderCard-screennameLink > span > b");
-  return userId.innerText;
+  let userID = document.querySelector(".u-linkComplex-target");
+  return userID.innerText;
 }
+
+function highlightAbusivePosts(abusive_list){
+
+  var alltweets = document.querySelectorAll(".tweet-text");
+    for(i=0;i<alltweets.length;i++)
+    {
+      var tweet = alltweets[i].innerText.toLowerCase();
+      for(j=0;j<abusive_list.length;j++){
+        var reg = new RegExp("\\b" + abusive_list[j] + "\\b", 'i')
+        if(reg.test(tweet))
+        {
+          tweet =  tweet.replace(abusive_list[j],"<span style=color:#002DFF;>"+abusive_list[j] +"</span>");
+          alltweets[i].innerHTML = tweet;
+          alltweets[i].style.backgroundColor = "#FCB0AC"; 
+        }
+      }
+    }
+  }
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
@@ -51,7 +80,7 @@ chrome.runtime.onMessage.addListener(
 function checkForJS_Finish() {
   if (document.querySelector(".ProfileHeaderCard-bio")
   ) {
-    if (document.querySelector(".ProfileHeaderCard-screennameLink > span > b").innerText != userID){
+    if (document.querySelector(".u-linkComplex-target").innerText != userID){
       //send get request
       userID = findUserId(document);
       get_score(userID, checkabusive);
@@ -63,7 +92,7 @@ function checkForJS_Finish() {
   }
 }
 
-function changeBio(){
+function changeBio(abusive_list){
   userID = document.querySelector(".ProfileHeaderCard-nameLink").innerText;
 
   var originalDiv = document.getElementsByClassName("ProfileHeaderCard-screenname");
@@ -83,7 +112,8 @@ function changeBio(){
 
       // Title Image
       var logo = document.createElement("IMG");
-      logo.setAttribute("src", "chrome-extension://pldpfpfcdmnmdellocecpejmgpimfppj/icon.png");
+      logo.src = `chrome-extension://${chrome.runtime.id}/icon.png`;
+    //  logo.setAttribute("src", "chrome-extension://" + ${chrome.runtime.id} + "/icon.png");
       logo.setAttribute("id", "bio-box-img");
       biobox.append(logo);
 
@@ -108,13 +138,16 @@ function changeBio(){
         var biobox_word = document.createElement("P");
         charbox.appendChild(biobox_word);
         biobox_word.id = "bio-box-text";
-        biobox_word.innerText = "Top 5 Abusive Words";
+        biobox_word.innerText = "Few Abusive Words Used";
 
         // Abusive_words
         var biobox_word_items = document.createElement("P");
         biobox_word.appendChild(biobox_word_items);
         biobox_word_items.id = "bio-box-highlight";
-        biobox_word_items.innerText = "Something";
+        var abusiveWordsToDisplay = "";
+        for(i=0;i<7;i++)
+          abusiveWordsToDisplay = abusiveWordsToDisplay + abusive_list[i] + " ";
+        biobox_word_items.innerText = abusiveWordsToDisplay;
 
     var bio1 = document.getElementsByClassName("ProfileHeaderCard-bio");
     var bio2 = document.getElementsByClassName("ProfileHeaderCard-location");
@@ -166,17 +199,22 @@ function changeTweet(){
   let tweetBtn = document.getElementsByClassName("NewTweetButton-text");
   tweetBtn[0].innerHTML = "Moralize this user";
   tweetBtn[0].addEventListener('click', moralize);
-  let msgBtn = document.getElementsByClassName("DMButton-text");
-  if (msgBtn.length){
-    msgBtn[0].innerHTML = "Whisper to this user";
-  };
-
+  var privateMessageButton = document.getElementsByClassName("DMButton u-sizeFull u-textTruncate js-tooltip EdgeButton EdgeButton--primary");
+  console.log(privateMessageButton);
+  if(privateMessageButton.length != 0)
+ {
+    let msgBtn = document.getElementsByClassName("DMButton-text");
+    if (msgBtn.length){
+      msgBtn[0].innerHTML = "Whisper to this user";
+    };
+    privateMessageButton[0].style.backgroundColor = "#eb3b5a";
+  }
 }
 
 function moralize() {
   let t = setTimeout(function() {
     if (document.querySelector(".tweet-box > div")){
-      document.querySelector(".tweet-box > div").innerHTML = "@" + userID + " My extension says you are abusive. Please stop.";
+      document.querySelector(".tweet-box > div").innerHTML = item.tweet_content;
       clearTimeout(t);
     }
 
