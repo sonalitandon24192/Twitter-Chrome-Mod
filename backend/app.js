@@ -2,6 +2,8 @@ var express = require('express');
 var app = express();
 var fs = require('fs');
 var Twit = require("twit");
+var cors = require('cors');
+app.use(cors());
 
 // import word list
 abusive_json = require('./word_list/abusive_final_combined.json')
@@ -27,13 +29,14 @@ app.get("/", function(req, res) {
 app.get('/tpi', function(req, res) {
     var user = req.query.user;
     var request_number = req.query.numberTwit ? parseInt(req.query.numberTwit): 200;
+    var threshold = req.query.threshold ? parseFloat(req.query.threshold): 0.002;
 
     console.log('request_number',request_number)
-    obtainTweets(user, request_number, undefined, null, res, find_abusive)
+    obtainTweets(user,threshold, request_number, undefined, null, res, find_abusive)
 });
 
 
-function obtainTweets(screen_name, number, lastId, dataset, res, callback) {
+function obtainTweets(screen_name,threshold, number, lastId, dataset, res, callback) {
 
     // setting params
     var params = {
@@ -44,19 +47,19 @@ function obtainTweets(screen_name, number, lastId, dataset, res, callback) {
 
     dataset = dataset || []
     // if we have got enough data, end the data collection and run the callback function
-    if (number <= 0) return callback(null, dataset,res)
+    if (number <= 0) return callback(null, dataset,screen_name, threshold, res)
     
     // run Twitter API
     return T.get('statuses/user_timeline', params, function(err, data, response) {
         if (err) {
             console.log('Twitter search failed!');
-            return callback(err,[],res);
+            return callback(err,[],screen_name,threshold, res);
         }
         if (data.length>0) {
             // no more new data
             if (lastId==data[data.length - 1].id_str ) {
                 console.log('All Posts have found');
-                return callback(null,dataset, res);
+                return callback(null,dataset, screen_name, threshold, res);
             }
 
             lastId = parseInt(data[data.length - 1].id_str);
@@ -64,13 +67,13 @@ function obtainTweets(screen_name, number, lastId, dataset, res, callback) {
             
             // concat data
             dataset = dataset.concat(data)
-            return obtainTweets(screen_name, number - 200, lastId, dataset, res, callback)
+            return obtainTweets(screen_name, threshold, number - 200, lastId, dataset, res, callback)
         }
     })
 }
 
 // callback function
-function find_abusive(error, data, res) {
+function find_abusive(error, data, screen_name, threshold, res) {
 
         if (error) {
             res.setHeader('Content-Type', 'application/json');
@@ -104,17 +107,35 @@ function find_abusive(error, data, res) {
                     //console.log(keywords,word_count);
                 }
 
+                // new formate
                 var word_ratio = total_count / giant_string.length
-                var abusive_user = word_ratio > 0.002 ? true : false;
-                var abusive_list_count_sort = Object.entries(abusive_list_count).sort(function(a, b) { return b[1] - a[1] }).slice(0, 5)
+                var bio="quote: This account has been flagged because we have detected they have been using abusive behavior.";
+                var tweet_btn='Moralize this user.';
+                var tweet_content="@" + screen_name + " My extension says you are abusive. Please stop.";
+                var msg_btn='let them know privately.';
+                var msg_content="@" + screen_name + " My extension says you are abusive. Please stop.";
+                var profile_img='fake url';
+                var yes_no = word_ratio > threshold ? true : false; 
+                var temp = Object.entries(abusive_list_count).sort(function(a, b) { return b[1] - a[1] }).filter(function(d){return d[1]>0}); 
+                var word_list=[];
+                temp.forEach(function(entry) {
+                    var singleObj = {}
+                    singleObj['word'] = entry[0];
+                    singleObj['value'] = entry[1];
+                    word_list.push(singleObj);
+                });
+
+                //var word_list = Object.entries(abusive_list_count).sort(function(a, b) { return b[1] - a[1] }).filter(function(d){return d[1]>0}).map(function(d){return d[0]}) ; 
+
                 console.log('-----------------------------------------------------------')
                 console.log('total count; ', total_count)
                 console.log('ratio: ', word_ratio)
-                console.log('abusive_list_count_sort: ', abusive_list_count_sort)
-
+                console.log('abusive_list_count_sort: ', word_list)
 
                 res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify({ error: false, error_msg: '', word_count: total_count, word_ratio: word_ratio, abusive_user: abusive_user, abusive_list_count_10: abusive_list_count_sort.map(function(d){return d[0]}) }));
+                res.send(JSON.stringify({ error: false, error_msg: '', word_count: total_count, word_ratio: word_ratio, 
+                    bio: bio, word_list: word_list, tweet_btn: tweet_btn, tweet_content:tweet_content,msg_btn:msg_btn,
+                    msg_content: msg_content, profile_img:profile_img, yes_no: yes_no}));
 
             } else {
                 error_msg = 'no twitter data has found for '.concat(screen_name)

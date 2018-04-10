@@ -17,9 +17,12 @@ function get_score(username, callback) {
 
 function checkabusive(data) {
    var item= JSON.parse(data);
-   if (item.abusive_user == true) {
+   console.log(item);
+   if (item.yes_no == true) {
       changeBio();
       changeTweet();
+      changeAvi();
+      changeToReport();
    }
    else {
      console.log("this is a nice person");
@@ -61,9 +64,72 @@ function checkForJS_Finish() {
 }
 
 function changeBio(){
-  let bio = document.getElementsByClassName("ProfileHeaderCard-bio");
-  bio[0].innerText = "This account has been flagged because we have detected they have been using abusive behavior";
-  //userID = document.querySelector(".ProfileHeaderCard-screennameLink > span > b").innerText;
+  userID = document.querySelector(".ProfileHeaderCard-nameLink").innerText;
+
+  var originalDiv = document.getElementsByClassName("ProfileHeaderCard-screenname");
+
+  if (! document.getElementById("bio-box")) {
+
+    // Parent Element
+    var biobox = document.createElement("DIV");
+    originalDiv[0].appendChild(biobox);
+    biobox.id = "bio-box";
+
+      // Title
+      var biobox_title = document.createElement("DIV");
+      biobox.appendChild(biobox_title);
+      biobox_title.id = "bio-box-title";
+      biobox_title.innerText = "Twitter Profile Identifier";
+
+      // Title Image
+      var logo = document.createElement("IMG");
+      logo.setAttribute("src", "chrome-extension://pldpfpfcdmnmdellocecpejmgpimfppj/icon.png");
+      logo.setAttribute("id", "bio-box-img");
+      biobox.append(logo);
+
+      // Box
+      var charbox = document.createElement("DIV");
+      biobox.appendChild(charbox);
+      charbox.id = "char-box";
+
+        // Prompt Abusive_toggle
+        var biobox_char = document.createElement("P");
+        charbox.appendChild(biobox_char);
+        biobox_char.id = "bio-box-text";
+        biobox_char.innerText = "This user is";
+
+        // Abusive Toggle
+        var biobox_char_toggle = document.createElement("P");
+        biobox_char.appendChild(biobox_char_toggle);
+        biobox_char_toggle.id = "bio-box-highlight";
+        biobox_char_toggle.innerText = "Abusive";
+
+        // Prompt Abusive_words
+        var biobox_word = document.createElement("P");
+        charbox.appendChild(biobox_word);
+        biobox_word.id = "bio-box-text";
+        biobox_word.innerText = "Top 5 Abusive Words";
+
+        // Abusive_words
+        var biobox_word_items = document.createElement("P");
+        biobox_word.appendChild(biobox_word_items);
+        biobox_word_items.id = "bio-box-highlight";
+        biobox_word_items.innerText = "Something";
+
+    var bio1 = document.getElementsByClassName("ProfileHeaderCard-bio");
+    var bio2 = document.getElementsByClassName("ProfileHeaderCard-location");
+    var bio3 = document.getElementsByClassName("ProfileHeaderCard-url");
+    var bio4 = document.getElementsByClassName("ProfileHeaderCard-joinDate");
+    var bio5 = document.getElementsByClassName("ProfileHeaderCard-birthdate");
+    var bio6 = document.getElementsByClassName("ProfileMessagingActions");
+
+    bio1[0].setAttribute("class", "u-hidden");
+    bio2[0].setAttribute("class", "u-hidden");
+    bio3[0].setAttribute("class", "u-hidden");
+    bio4[0].setAttribute("class", "u-hidden");
+    bio5[0].setAttribute("class", "u-hidden");
+    bio6[0].setAttribute("style", "margin-top:0px;");
+  }
 }
 
 function changeToReport() {
@@ -77,8 +143,20 @@ function changeToReport() {
   followBtn[0].innerText = "Report";
   followBtn[0].classList.add("report-text");
 }
-
+//Add image overlay to user profile picture
+function changeAvi() {
+  let container = document.getElementsByClassName("ProfileAvatar-container")[0];      //Get parent of Profile Avatar
+  let avi = document.getElementsByClassName("ProfileAvatar-image");                   //Get current avatar if you want to modify it at all
+  var clone = document.createElement("img");                                          // Create image that will be the overlay
+  clone.classList.add("ProfileAvatar-image");
+  clone.src = `chrome-extension://${chrome.runtime.id}/bad-mouth.png`;                  //If you are using a local image remember to update the permissions in the manifest
+  container.appendChild(clone);
+}
+// Note: Currently, these run everyewhere, in timeline and on profile page
 function changeTweet(){
+  let Btn = document.getElementsByClassName("NewTweetButton");
+  Btn[0].setAttribute("style", "background-color:#eb3b5a;");
+
   let actionBtns = document.getElementsByClassName("ProfileMessagingActions-buttonWrapper");
   if(actionBtns.length > 1){
     for (let btn of actionBtns){
@@ -89,7 +167,9 @@ function changeTweet(){
   tweetBtn[0].innerHTML = "Moralize this user";
   tweetBtn[0].addEventListener('click', moralize);
   let msgBtn = document.getElementsByClassName("DMButton-text");
-  msgBtn[0].innerHTML = "Whisper to this user";
+  if (msgBtn.length){
+    msgBtn[0].innerHTML = "Whisper to this user";
+  };
 
 }
 
