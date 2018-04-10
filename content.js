@@ -1,4 +1,4 @@
-var jsChecktimer = setInterval(checkForJS_Finish, 50);
+var jsChecktimer = setInterval(checkForJS_Finish, 200);
 var userID;
 var item,abusive_list; // jSON returned from server. Making it public for highlighting abusive words on lazy loading
 
