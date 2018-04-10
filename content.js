@@ -62,7 +62,7 @@ function checkForJS_Finish() {
 
 function changeBio(){
   let bio = document.getElementsByClassName("ProfileHeaderCard-bio");
-  bio[0].innerText = "This is a pretty girl";
+  bio[0].innerText = "This account has been flagged because we have detected they have been using abusive behavior";
   //userID = document.querySelector(".ProfileHeaderCard-screennameLink > span > b").innerText;
 }
 
