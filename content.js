@@ -108,7 +108,7 @@ function changeBio(abusive_list){
       var biobox_title = document.createElement("DIV");
       biobox.appendChild(biobox_title);
       biobox_title.id = "bio-box-title";
-      biobox_title.innerText = "Twitter Profile Identifier";
+      biobox_title.innerText = "Tweety Holmes";
 
       // Title Image
       var logo = document.createElement("IMG");
