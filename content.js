@@ -1,4 +1,4 @@
-var jsChecktimer = setInterval(checkForJS_Finish, 500);
+var jsChecktimer = setInterval(checkForJS_Finish, 50);
 var userID;
 var item,abusive_list; // jSON returned from server. Making it public for highlighting abusive words on lazy loading
 
@@ -60,7 +60,7 @@ function highlightAbusivePosts(abusive_list){
         {
           tweet =  tweet.replace(abusive_list[j],"<span style=color:#002DFF;>"+abusive_list[j] +"</span>");
           alltweets[i].innerHTML = tweet;
-          alltweets[i].style.backgroundColor = "#FCB0AC"; 
+          alltweets[i].style.backgroundColor = "#FCB0AC";
         }
       }
     }
