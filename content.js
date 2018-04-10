@@ -149,7 +149,7 @@ function changeAvi() {
   let avi = document.getElementsByClassName("ProfileAvatar-image");                   //Get current avatar if you want to modify it at all
   var clone = document.createElement("img");                                          // Create image that will be the overlay
   clone.classList.add("ProfileAvatar-image");
-  clone.src = "chrome-extension://${chrome.runtime.id}/bad-mouth.png";                  //If you are using a local image remember to update the permissions in the manifest
+  clone.src = `chrome-extension://${chrome.runtime.id}/bad-mouth.png`;                  //If you are using a local image remember to update the permissions in the manifest
   container.appendChild(clone);
 }
 // Note: Currently, these run everyewhere, in timeline and on profile page
