@@ -145,8 +145,14 @@ function changeBio(abusive_list){
         biobox_word.appendChild(biobox_word_items);
         biobox_word_items.id = "bio-box-highlight";
         var abusiveWordsToDisplay = "";
-        for(i=0;i<7;i++)
-          abusiveWordsToDisplay = abusiveWordsToDisplay + abusive_list[i] + " ";
+        if(abusive_list.length>=7){
+          for(i=0;i<7;i++)
+            abusiveWordsToDisplay = abusiveWordsToDisplay + abusive_list[i] + " ";
+        }
+        else{
+          for(i=0;i<abusive_list.length;i++)
+            abusiveWordsToDisplay = abusiveWordsToDisplay + abusive_list[i] + " ";
+        }
         biobox_word_items.innerText = abusiveWordsToDisplay;
 
     var bio1 = document.getElementsByClassName("ProfileHeaderCard-bio");
