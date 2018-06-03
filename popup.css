@@ -4,21 +4,12 @@
 body {
   margin: 20px;
   white-space: nowrap;
-  color: #fc5c65;
 }
 
-h1 {
-  font-size: 15px;
-  color: #eb3b5a;
+h3 {
+  color: #FC427B;
 }
 
-.btn-get {
-  background-color: #ffffff;
-  padding: 5px;
-}
-
-#container {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
+.panel-heading {
+  background-color: #FC427B;
 }
