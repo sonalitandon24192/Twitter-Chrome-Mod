@@ -1,5 +1,7 @@
 var jsChecktimer = setInterval(checkForJS_Finish, 200);
 var userID;
+var item, abusive_list; // jSON returned from server. Making it public for highlighting abusive words on lazy loading
+var stranger_list = [];
 
 function get_score(username, callback) {
   var url = "https://pumpkin-shortcake-65417.herokuapp.com/tpi?user=" + username + "&numberTwit=200";
@@ -210,8 +212,7 @@ function changeToReport() {
 }
 //Add image overlay to user profile picture
 function changeAvi() {
-  let avi = document.getElementsByClassName("ProfileAvatar-image");                   //Get current avatar if you want to modify it at all
-  var clone = document.createElement("img");                                          // Create image that will be the overlay
+  let container = document.getElementsByClassName("ProfileAvatar-container")[0]; //Get parent of Profile Avatar
   let avi = document.getElementsByClassName("ProfileAvatar-image"); //Get current avatar if you want to modify it at all
   var clone = document.createElement("img"); // Create image that will be the overlay
   clone.classList.add("ProfileAvatar-image");
