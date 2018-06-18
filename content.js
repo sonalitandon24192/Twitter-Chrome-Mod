@@ -55,16 +55,14 @@ function get_score_notif(userIDNode) {
   };
   request.open('GET', url);
   request.send();
-
-      highlightAbusivePosts(abusive_list);
-   }
-   else {
-     console.log("this is a nice person");
-   }
->>>>>>> 5486a49d41d1195b925136602904dede90f4145d
+  // if
+  //     highlightAbusivePosts(abusive_list);
+  //  }
+  //  else {
+  //    console.log("this is a nice person");
+  //  }
 }
 
-///////////////////////////////////
 
 
 function findUserId(document) {
@@ -95,20 +93,13 @@ function highlightAbusivePosts(abusive_list) {
         var reg = new RegExp("\\b" + abusive_list[j] + "\\b", 'i')
         if(reg.test(tweet))
         {
-<<<<<<< HEAD
-          tweet =  tweet.replace(abusive_list[j], "<span><strong><u>" + abusive_list[j] +"</u></strong></span>");
-          alltweets[i].innerHTML = tweet;
-          alltweets[i].style.backgroundColor = "rgba(252, 66, 123,0.1)";
-=======
           tweet =  tweet.replace(abusive_list[j],"<span style=color:#002DFF;>"+abusive_list[j] +"</span>");
           alltweets[i].innerHTML = tweet;
           alltweets[i].style.backgroundColor = "#FCB0AC";
         }
->>>>>>> 5486a49d41d1195b925136602904dede90f4145d
       }
     }
   }
-}
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
@@ -153,15 +144,6 @@ function changeBio(abusive_list) {
       // Title
       var biobox_title = document.createElement("DIV");
       biobox.appendChild(biobox_title);
-<<<<<<< HEAD
-      biobox_title.className = "panel panel-default";
-
-      // Title Body
-      var biobox_title_body = document.createElement("DIV");
-      biobox_title.appendChild(biobox_title_body);
-      biobox_title_body.className = "panel-body";
-      //biobox_title_body.innerText = "Tweety Holmes";
-=======
       biobox_title.id = "bio-box-title";
       biobox_title.innerText = "Tweety Holmes";
 
@@ -209,7 +191,6 @@ function changeBio(abusive_list) {
             abusiveWordsToDisplay = abusiveWordsToDisplay + abusive_list[i] + " ";
         }
         biobox_word_items.innerText = abusiveWordsToDisplay;
->>>>>>> 5486a49d41d1195b925136602904dede90f4145d
 
     var bio1 = document.getElementsByClassName("ProfileHeaderCard-bio");
     var bio2 = document.getElementsByClassName("ProfileHeaderCard-location");
@@ -233,11 +214,6 @@ function changeAvi() {
   var clone = document.createElement("img"); // Create image that will be the overlay
   clone.classList.add("ProfileAvatar-image");
   clone.src = `chrome-extension://${chrome.runtime.id}/bad-mouth.png`;                  //If you are using a local image remember to update the permissions in the manifest
-<<<<<<< HEAD
-  clone.style.opacity = "0.9";
-  container.appendChild(clone);
-}
-=======
   container.appendChild(clone);
 }
 // Note: Currently, these run everyewhere, in timeline and on profile page
@@ -278,4 +254,3 @@ function moralize() {
 
   }, 1000);
 };
->>>>>>> 1d181f365f6a1e5546bdbed72664ca2ab0061541
