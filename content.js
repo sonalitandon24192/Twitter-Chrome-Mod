@@ -179,6 +179,10 @@ function changeBio(abusive_list){
             biobox_word_items.style.margin = "5px 5px 0 0";
             biobox_word_items.innerText = abusive_list[i];
             word_div.appendChild(biobox_word_items);
+            // var biobox_word_num = document.createElement("SPAN");
+            // biobox_word_items.appendChild(biobox_word_num);
+            // biobox_word_num.className ="badge badge-primary badge-pill";
+            // biobox_word_num.innerText = "13";
           }
         }
         else {
@@ -186,11 +190,46 @@ function changeBio(abusive_list){
             var biobox_word_items = document.createElement("SPAN");
             biobox_word_items.className = "badge badge-secondary";
             biobox_word_items.id = "badge-word";
-            biobox_word_items.style.marginright = "5px";
+            biobox_word_items.style.margin = "5px 5px 0 0";
             biobox_word_items.innerText = abusive_list[i];
             word_div.appendChild(biobox_word_items);
+            // var biobox_word_num = document.createElement("SPAN");
+            // biobox_word_items.appendChild(biobox_word_num);
+            // biobox_word_num.className ="badge badge-primary badge-pill";
+            // biobox_word_num.innerText = "13";
           }
         }
+
+        /*
+        var list_group = document.createElement("UL");
+        list_group.className = "list-group";
+        charbox.append(list_group);
+
+        if(abusive_list.length >= 7) {
+          for(i=0; i<7; i++) {
+            var biobox_word_items = document.createElement("LI");
+            list_group.appendChild(biobox_word_items);
+            biobox_word_items.className = "list-group-item d-flex justify-content-between align-items-center";
+            biobox_word_items.innerText = abusive_list[i];
+            var biobox_word_num = document.createElement("SPAN");
+            biobox_word_items.appendChild(biobox_word_num);
+            biobox_word_num.className ="badge badge-primary badge-pill";
+            biobox_word_num.innerText = "13";
+          }
+        }
+        else {
+          for(i=0; i<abusive_list.length; i++) {
+            var biobox_word_items = document.createElement("LI");
+            list_group.appendChild(biobox_word_items);
+            biobox_word_items.className = "list-group-item d-flex justify-content-between align-items-center";
+            biobox_word_items.innerText = abusive_list[i];
+            var biobox_word_num = document.createElement("SPAN");
+            biobox_word_items.appendChild(biobox_word_num);
+            biobox_word_num.className ="badge badge-primary badge-pill";
+            biobox_word_num.innerText = "13";
+          }
+        }
+        */
 
     var bio1 = document.getElementsByClassName("ProfileHeaderCard-bio");
     var bio2 = document.getElementsByClassName("ProfileHeaderCard-location");
