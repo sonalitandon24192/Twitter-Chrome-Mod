@@ -36,3 +36,7 @@ u {
   text-decoration: none;
   border-bottom: 2px solid #FC427B;
 }
+
+#badge-word {
+  background-color: rgb(252, 66, 123, .5);
+}
