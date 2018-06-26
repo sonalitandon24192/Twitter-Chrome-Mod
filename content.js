@@ -4,7 +4,7 @@ var item, abusive_list; // jSON returned from server. Making it public for highl
 var stranger_list = [];
 
 function get_score(username, callback) {
-    var url = "https://pumpkin-shortcake-65417.herokuapp.com/tpi?user="+username+"&numberTwit=200";
+    var url = "https://pumpkin-shortcake-65417.herokuapp.com/tpi?user=" + username + "&numberTwit=200";
     var request = new XMLHttpRequest();
     request.onreadystatechange = function()
     {
@@ -19,9 +19,8 @@ function get_score(username, callback) {
 
 window.onscroll = function(ev) {
   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      // you're at the bottom of the page
-      if(item.yes_no)
-        highlightAbusivePosts(abusive_list);
+    if(item.yes_no)
+      highlightAbusivePosts(abusive_list);
   }
 };
 
@@ -119,92 +118,91 @@ function changeBio(abusive_list){
   parents[0].setAttribute("style", "margin-top:50px;");
 
   if (! document.getElementById("bio-box")) {
-
     // Parent Element
     var biobox = document.createElement("DIV");
     originalDiv[0].insertAdjacentElement("afterend", biobox);
     biobox.id = "bio-box";
 
-      // Title
-      var biobox_title = document.createElement("DIV");
-      biobox.appendChild(biobox_title);
-      biobox_title.className = "panel panel-default";
+    // Title
+    var biobox_title = document.createElement("DIV");
+    biobox.appendChild(biobox_title);
+    biobox_title.className = "panel panel-default";
 
-      // Title Body
-      var biobox_title_body = document.createElement("DIV");
-      biobox_title.appendChild(biobox_title_body);
-      biobox_title_body.className = "panel-body";
-      //biobox_title_body.innerText = "Tweety Holmes";
+    // Title Body
+    var biobox_title_body = document.createElement("DIV");
+    biobox_title.appendChild(biobox_title_body);
+    biobox_title_body.className = "panel-body";
+    //biobox_title_body.innerText = "Tweety Holmes";
 
-      // Title Image
-      var logo = document.createElement("IMG");
-      logo.src = chrome.extension.getURL("icon.png");
-      logo.setAttribute("id", "bio-box-img");
-      biobox_title_body.append(logo);
+    // Title Image
+    var logo = document.createElement("IMG");
+    logo.src = chrome.extension.getURL("icon.png");
+    logo.setAttribute("id", "bio-box-img");
+    biobox_title_body.append(logo);
 
-      // Box
-      var charbox = document.createElement("DIV");
-      biobox_title_body.appendChild(charbox);
-      charbox.id = "char-box";
+    // Box
+    var charbox = document.createElement("DIV");
+    biobox_title_body.appendChild(charbox);
+    charbox.id = "char-box";
 
-        // Prompt Abusive_toggle
-        var biobox_char = document.createElement("P");
-        charbox.appendChild(biobox_char);
-        biobox_char.id = "bio-box-text";
-        biobox_char.innerText = "This user is";
+    // Prompt Abusive_toggle
+    var biobox_char = document.createElement("P");
+    charbox.appendChild(biobox_char);
+    biobox_char.id = "bio-box-text";
+    biobox_char.innerText = "This user is";
 
-        // Abusive Toggle
-        var biobox_char_toggle = document.createElement("P");
-        biobox_char.appendChild(biobox_char_toggle);
-        biobox_char_toggle.id = "bio-box-highlight";
-        biobox_char_toggle.innerText = "Abusive";
+    // Abusive Toggle
+    var biobox_char_toggle = document.createElement("P");
+    biobox_char.appendChild(biobox_char_toggle);
+    biobox_char_toggle.id = "bio-box-highlight";
+    biobox_char_toggle.innerText = "Abusive";
 
-        // Prompt Abusive_words
-        var biobox_word = document.createElement("P");
-        charbox.appendChild(biobox_word);
-        biobox_word.id = "bio-box-text";
-        biobox_word.innerText = "Few abusive words used";
+    // Prompt Abusive_words
+    var biobox_word = document.createElement("P");
+    charbox.appendChild(biobox_word);
+    biobox_word.id = "bio-box-text";
+    biobox_word.innerText = "Few abusive words used";
 
-        // Abusive_words
-        var list_group = document.createElement("DIV");
-        var word_div = document.createElement('H2');
-        list_group.appendChild(word_div);
-        charbox.appendChild(list_group);
+    // Abusive_words
+    var list_group = document.createElement("DIV");
+    var word_div = document.createElement('H2');
+    list_group.appendChild(word_div);
+    charbox.appendChild(list_group);
 
-        if(abusive_list.length >= 7) {
-          for(i=0; i<7; i++) {
-            var biobox_word_items = document.createElement("SPAN");
-            biobox_word_items.className = "badge badge-secondary";
-            biobox_word_items.id = "badge-word";
-            biobox_word_items.style.margin = "5px 5px 0 0";
-            biobox_word_items.innerText = abusive_list[i];
-            word_div.appendChild(biobox_word_items);
-          }
-        }
-        else {
-          for(i=0; i<abusive_list.length; i++) {
-            var biobox_word_items = document.createElement("SPAN");
-            biobox_word_items.className = "badge badge-secondary";
-            biobox_word_items.id = "badge-word";
-            biobox_word_items.style.margin = "5px 5px 0 0";
-            biobox_word_items.innerText = abusive_list[i];
-            word_div.appendChild(biobox_word_items);
-          }
-        }
+    if(abusive_list.length >= 7) {
+      for(i=0; i<7; i++) {
+        var biobox_word_items = document.createElement("SPAN");
+        biobox_word_items.className = "badge badge-secondary";
+        biobox_word_items.id = "badge-word";
+        biobox_word_items.style.margin = "5px 5px 0 0";
+        biobox_word_items.innerText = abusive_list[i];
+        word_div.appendChild(biobox_word_items);
+      }
+    }
+    else {
+      for(i=0; i<abusive_list.length; i++) {
+        var biobox_word_items = document.createElement("SPAN");
+        biobox_word_items.className = "badge badge-secondary";
+        biobox_word_items.id = "badge-word";
+        biobox_word_items.style.margin = "5px 5px 0 0";
+        biobox_word_items.innerText = abusive_list[i];
+        word_div.appendChild(biobox_word_items);
 
-    var bio1 = document.getElementsByClassName("ProfileHeaderCard-bio");
-    var bio2 = document.getElementsByClassName("ProfileHeaderCard-location");
-    var bio3 = document.getElementsByClassName("ProfileHeaderCard-url");
-    var bio4 = document.getElementsByClassName("ProfileHeaderCard-joinDate");
-    var bio5 = document.getElementsByClassName("ProfileHeaderCard-birthdate");
-    var bio6 = document.getElementsByClassName("ProfileMessagingActions");
+        var bio1 = document.getElementsByClassName("ProfileHeaderCard-bio");
+        var bio2 = document.getElementsByClassName("ProfileHeaderCard-location");
+        var bio3 = document.getElementsByClassName("ProfileHeaderCard-url");
+        var bio4 = document.getElementsByClassName("ProfileHeaderCard-joinDate");
+        var bio5 = document.getElementsByClassName("ProfileHeaderCard-birthdate");
+        var bio6 = document.getElementsByClassName("ProfileMessagingActions");
 
-    bio1[0].setAttribute("class", "u-hidden");
-    bio2[0].setAttribute("class", "u-hidden");
-    bio3[0].setAttribute("class", "u-hidden");
-    bio4[0].setAttribute("class", "u-hidden");
-    bio5[0].setAttribute("class", "u-hidden");
-    bio6[0].setAttribute("style", "margin-top:0px;");
+        bio1[0].setAttribute("class", "u-hidden");
+        bio2[0].setAttribute("class", "u-hidden");
+        bio3[0].setAttribute("class", "u-hidden");
+        bio4[0].setAttribute("class", "u-hidden");
+        bio5[0].setAttribute("class", "u-hidden");
+        bio6[0].setAttribute("style", "margin-top:0px;");
+      }
+    }
   }
 }
 
