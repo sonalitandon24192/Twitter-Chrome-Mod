@@ -26,8 +26,8 @@ window.onscroll = function(ev) {
 
 function checkabusive(data) {
   item= JSON.parse(data);
-   console.log(item);
    if (item.yes_no == true) {
+   	  console.log(item);
       abusive_list = item.word_list.map(function(d) { return d.word })
       changeBio(abusive_list);
       changeAvi();
@@ -52,9 +52,13 @@ function get_score_notif(userIDNode) {
   request.send();
 }
 
+function changeNameHeader(userIDNode) {	
+  userIDNode.innerText += " <- This user is potentially abusive"	
+}
+
 function findUserId(document) {
-  let userID = document.querySelector(".u-linkComplex-target");
-  return userID.innerText;
+  let userId = document.querySelector(".ProfileHeaderCard-screennameLink > span > b");
+  return userId.innerText;
 }
 
 function checkNotifUserId(document) {
@@ -87,31 +91,26 @@ function highlightAbusivePosts(abusive_list) {
   }
 }
 
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    let userId = findUserId(document);
-    console.log(userId)
-    if (userId) {
-    }
-    return true;
-});
 
 function checkForJS_Finish() {
   if (document.querySelector(".ProfileHeaderCard-bio")
   ) {
-    if (document.querySelector(".u-linkComplex-target").innerText != userID){
+    if (document.querySelector(".ProfileHeaderCard-screennameLink > span > b").innerText != userID){
       //send get request
+      console.log(userID);
       userID = findUserId(document);
       get_score(userID, checkabusive);
     }
+    }
     if (document.querySelector(".NotificationsHeadingContent")) {
+      console.log("hello");
       checkNotifUserId(document);
     }
-  }
+  
 }
 
 function changeBio(abusive_list){
-  userID = document.querySelector(".ProfileHeaderCard-nameLink").innerText;
+  //userID = document.querySelector(".ProfileHeaderCard-nameLink").innerText;
 
   var originalDiv = document.getElementsByClassName("ProfileHeaderCard-screenname");
   var parents = document.getElementsByClassName("AppContent-main content-main u-cf");
