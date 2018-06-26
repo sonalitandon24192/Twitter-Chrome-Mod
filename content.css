@@ -16,6 +16,7 @@
 #bio-box-text {
   padding-top: 10px;
   font-family: arial, Helvetica, sans-serif;
+  font-size: 15px;
 }
 
 .list-group {
@@ -34,4 +35,8 @@ u {
   padding-bottom: 1px;
   text-decoration: none;
   border-bottom: 2px solid #FC427B;
+}
+
+#badge-word {
+  background-color: rgb(252, 66, 123, .5);
 }
