@@ -4,7 +4,7 @@ var item, abusive_list; // jSON returned from server. Making it public for highl
 var stranger_list = [];
 
 function get_score(username, callback) {
-    var url = "https://pumpkin-shortcake-65417.herokuapp.com/tpi?user=" + username + "&numberTwit=200";
+    var url = "https://test-sonali-app.herokuapp.com/tpi?user=" + username + "&numberTwit=200";
     var request = new XMLHttpRequest();
     request.onreadystatechange = function()
     {
@@ -36,7 +36,7 @@ function checkabusive(data) {
 }
 
 function get_score_notif(userIDNode) {
-  var url = "https://pumpkin-shortcake-65417.herokuapp.com/tpi?user=" + userIDNode.innerText + "&numberTwit=200";
+  var url = "https://test-sonali-app.herokuapp.com/tpi?user=" + userIDNode.innerText + "&numberTwit=200";
   console.log(url);
   var request = new XMLHttpRequest();
   request.onreadystatechange = function() {
