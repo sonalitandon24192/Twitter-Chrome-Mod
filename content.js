@@ -53,7 +53,11 @@ function get_score_notif(userIDNode) {
 }
 
 function changeNameHeader(userIDNode) {	
-  userIDNode.innerText += " <- This user is potentially abusive"	
+ // userIDNode.innerText += " <- This user is potentially abusive"	
+  var warningNotification = document.createElement('span');
+  warningNotification.innerText = " WARNING! Potentially Abusive";
+  warningNotification.id = "warning";
+  userIDNode.appendChild(warningNotification);
 }
 
 function findUserId(document) {
