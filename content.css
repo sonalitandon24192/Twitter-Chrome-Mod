@@ -40,3 +40,9 @@ u {
 #badge-word {
   background-color: rgb(252, 66, 123, .5);
 }
+
+
+#warning {
+  color:#FC427B;
+  font-weight: bold;
+}
