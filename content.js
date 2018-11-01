@@ -27,7 +27,7 @@ window.onscroll = function(ev) {
 function checkabusive(data) {
   item= JSON.parse(data);
    if (item.yes_no == true) {
-   	  console.log(item);
+      console.log(item);
       abusive_list = item.word_list.map(function(d) { return d.word })
       changeBio(abusive_list);
       changeAvi();
@@ -52,8 +52,8 @@ function get_score_notif(userIDNode) {
   request.send();
 }
 
-function changeNameHeader(userIDNode) {	
- // userIDNode.innerText += " <- This user is potentially abusive"	
+function changeNameHeader(userIDNode) { 
+ // userIDNode.innerText += " <- This user is potentially abusive"  
   var warningNotification = document.createElement('span');
   warningNotification.innerText = " WARNING! Potentially Abusive";
   warningNotification.id = "warning";
