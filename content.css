@@ -38,5 +38,20 @@ u {
 }
 
 #badge-word {
+  color : white;
   background-color: rgb(252, 66, 123, .5);
+  display: inline-block;
+  font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    padding: 0.25em 0.4em;
+    border-radius: 0.25rem;
+}
+
+#warning {
+  color:#FC427B;
+  font-weight: bold;
 }
